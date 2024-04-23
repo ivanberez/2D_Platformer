@@ -1,12 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
-public class CollisionChecker : MonoBehaviour
+public class PlayerCollisionHandlers : MonoBehaviour
 {
-    [field:SerializeField] public CollidCheker GroundCheker { get; private set; }                
-    
-    public Action<Player> EnemyCollideHandler;
-    public Action<Coin> CoinCollideHandler;
+    public event Action<Player> EnemyCollideHandler;
+    public event Action<Coin> CoinCollideHandler;
+
+    [field:SerializeField] public CollidCheker GroundCheker { get; private set; }                       
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

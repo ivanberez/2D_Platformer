@@ -1,48 +1,49 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(CollisionChecker))]
+[RequireComponent(typeof(Rigidbody2D), typeof(PlayerCollisionHandlers))]
 public class Movement : MonoBehaviour
-{
-    private const string Horizontal = nameof(Horizontal);
-
+{  
     [SerializeField] private float _speed;
     [SerializeField] private float _velPower;
     [SerializeField] private float _acceleration;
     [SerializeField] private float _decceleration;
-    [SerializeField] private float _forceJump;    
+    [SerializeField] private float _forceJump;
 
     private Rigidbody2D _rigidbody2D;
-    private CollisionChecker _collisionChecker;
-    
-    public float HorizontalAxis { get; private set; }
-    public float VerticalAxis { get; private set; }
+    private PlayerCollisionHandlers _collisionChecker;
+    private InputHandler _inputHandler;
+
+    public float HorizontalAxis => _inputHandler.HorizontalInput;
+    public float VerticalAxis  =>_rigidbody2D.velocity.y;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _collisionChecker = GetComponent<CollisionChecker>();
-    }
+        _collisionChecker = GetComponent<PlayerCollisionHandlers>();
+        _inputHandler = GetComponent<InputHandler>();
+    }    
 
-    private void Update()
+    private void FixedUpdate()
     {
-        HorizontalAxis = Input.GetAxis(Horizontal);
-        VerticalAxis = _rigidbody2D.velocity.y;
-
         if (HorizontalAxis != 0)
-            Move();
+        {
+            float targetSpeed = HorizontalAxis * _speed;
+            float speedDif = targetSpeed - _rigidbody2D.velocity.x;
+            float leration = (Mathf.Abs(targetSpeed) > 0.01) ? _acceleration : _decceleration;
+            float movement = Mathf.Pow(Mathf.Abs(speedDif) * leration, _velPower) * Mathf.Sign(speedDif);
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            Jump();
+            _rigidbody2D.AddForce(movement * Vector2.right);
+        }
     }
 
-    private void Move()
+    private void OnEnable()
     {
-        float targetSpeed = HorizontalAxis  * _speed;
-        float speedDif = targetSpeed - _rigidbody2D.velocity.x;
-        float leration = (Mathf.Abs(targetSpeed) > 0.01) ? _acceleration : _decceleration;
-        float movement = Mathf.Pow(Mathf.Abs(speedDif) * leration, _velPower) * Mathf.Sign(speedDif);
+        _inputHandler.SpaceDown += Jump;
+    }
 
-        _rigidbody2D.AddForce(movement * Vector2.right);        
+    private void OnDisable()
+    {
+        _inputHandler.SpaceDown -= Jump;
     }
 
     private void Jump()

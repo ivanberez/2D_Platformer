@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer), typeof(Animator))]
+[RequireComponent(typeof(Animator))]
 public class View : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);
-    private const string IsGround = nameof(IsGround);
+    private const string IsGround = nameof(IsGround);    
 
-    private SpriteRenderer _spriteRenderer;
     private Animator _animator;
+    private ChangerHorizontalRotation _horizontalRotation;
 
     private void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _horizontalRotation = new ChangerHorizontalRotation(transform);
     }
 
     public void ChangingOnGround(bool isGround)
@@ -26,7 +26,6 @@ public class View : MonoBehaviour
         _animator.SetFloat(Horizontal, Mathf.Abs(x));
         _animator.SetFloat(Vertical, y);
 
-        if (x != 0)
-            _spriteRenderer.flipX = x < 0;
+        _horizontalRotation.DefineRotation(x);
     }
 }

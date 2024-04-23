@@ -299,6 +299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ccea64c0e2dfc428f76c6dd5c964a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _callbackLayersMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!58 &6172595636132702697
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -324,7 +327,7 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 64
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -429,7 +432,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1459264017850339307}
-  - component: {fileID: 2740132706388229969}
   - component: {fileID: 3432543340975489075}
   - component: {fileID: 7146308542772095810}
   m_Layer: 0
@@ -456,27 +458,6 @@ Transform:
   - {fileID: 6988112907235750397}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &2740132706388229969
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5007235104148603349}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b4aabf711c181874ca3f3f6ea368a0fa, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3432543340975489075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,13 +477,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5007235104148603349}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33d2695ca3283f847b043ec624382e87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 1
-  _groundCheker: {fileID: 7687469265730171817}
+  _parentPoints: {fileID: 0}
+  _points: []
 --- !u!1 &7127646388989688806
 GameObject:
   m_ObjectHideFlags: 0
