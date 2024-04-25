@@ -484,7 +484,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 1
   _parentPoints: {fileID: 0}
-  _points: []
 --- !u!1 &7127646388989688806
 GameObject:
   m_ObjectHideFlags: 0

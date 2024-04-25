@@ -8,12 +8,12 @@ public class InputHandler : MonoBehaviour
 
     public event Action SpaceDown;
 
-    public float HorizontalInput { get; private set; }
+    public float HorizontalAxis { get; private set; }
 
     private void Update()
     {
-        HorizontalInput = Input.GetAxis(Horizontal);        
-
+        HorizontalAxis = Input.GetAxis(Horizontal);        
+     
         if (Input.GetKeyDown(KeyCode.Space))
             SpaceDown?.Invoke();
     }

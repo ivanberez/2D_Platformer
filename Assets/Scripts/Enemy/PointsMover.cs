@@ -59,7 +59,7 @@ public class PointsMover : MonoBehaviour
 
     private void SetTargetPoint()
     {
-        _indexPoint = (++_indexPoint) % _points.Length;
+        _indexPoint = ++_indexPoint % _points.Length;
         _targetPosition = _points[_indexPoint].position;
         
         _horizontalRotation.DefineRotation(transform.position.x - _targetPosition.x);

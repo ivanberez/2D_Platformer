@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class Coin : MonoBehaviour
 {
     private const string PickUp = nameof(PickUp);

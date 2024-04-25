@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class View : MonoBehaviour
+public class AnimationChanger : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     private const string Vertical = nameof(Vertical);

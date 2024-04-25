@@ -1,36 +1,41 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Movement), typeof(View))]
+[RequireComponent(typeof(Mover), typeof(InputHandler))]
+[RequireComponent(typeof(AnimationChanger), typeof(CollisionTransmitter))]
 public class Player : MonoBehaviour
 {
-    private View _view;
-    private Movement _movement;        
-    private PlayerCollisionHandlers _collisionChecker;
-    private Wallet _wallet;     
+    private Mover _mover;
+    private InputHandler _input;
+    private AnimationChanger _animationChanger;
+    private CollisionTransmitter _collisionTransmitter;
+    private Wallet _wallet;
 
     private void Awake()
-    {        
-        _view = GetComponent<View>();
-        _movement = GetComponent<Movement>();
-        _collisionChecker = GetComponent<PlayerCollisionHandlers>();        
+    {
+        _mover = GetComponent<Mover>();
+        _input = GetComponent<InputHandler>();
+        _animationChanger = GetComponent<AnimationChanger>();
+        _collisionTransmitter = GetComponent<CollisionTransmitter>();
 
         _wallet = new Wallet();
     }
 
     private void Update()
-    {       
-        _view.RefreshAxisesParams(_movement.HorizontalAxis, _movement.VerticalAxis);                
+    {
+        _mover.CommandMove(_input.HorizontalAxis);
+        _animationChanger.RefreshAxisesParams(_mover.HorizontalAxis, _mover.VerticalAxis);
     }
 
     private void OnEnable()
     {
-        _collisionChecker.GroundCheker.CollidHandler += _view.ChangingOnGround;
-        _collisionChecker.CoinCollideHandler += _wallet.AddCoin;
+        _input.SpaceDown += ()=> _mover.CommandJump(_collisionTransmitter.IsGrounded); 
+        _collisionTransmitter.GroundCollision += _animationChanger.ChangingOnGround;
+        _collisionTransmitter.CoinCollision += _wallet.AddCoin;
     }
 
     private void OnDisable()
     {
-        _collisionChecker.GroundCheker.CollidHandler -= _view.ChangingOnGround;
-        _collisionChecker.CoinCollideHandler -= _wallet.AddCoin;
+        _collisionTransmitter.GroundCollision -= _animationChanger.ChangingOnGround;
+        _collisionTransmitter.CoinCollision -= _wallet.AddCoin;
     }
 }
