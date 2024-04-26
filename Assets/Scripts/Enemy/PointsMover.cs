@@ -9,8 +9,7 @@ public class PointsMover : MonoBehaviour
 
     private int _indexPoint;
     private Vector3 _targetPosition;
-    private Transform[] _points;
-    private ChangerHorizontalRotation _horizontalRotation;
+    private Transform[] _points;    
 
     private void OnValidate()
     {
@@ -38,11 +37,6 @@ public class PointsMover : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        _horizontalRotation = new ChangerHorizontalRotation(transform);
-    }
-
     private void Start()
     {
         _indexPoint = StartIndexPoint;
@@ -62,6 +56,6 @@ public class PointsMover : MonoBehaviour
         _indexPoint = ++_indexPoint % _points.Length;
         _targetPosition = _points[_indexPoint].position;
         
-        _horizontalRotation.DefineRotation(transform.position.x - _targetPosition.x);
+        ChangerRotation.DefineAxisX(transform.position.x - _targetPosition.x, transform);
     }
 }

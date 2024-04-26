@@ -22,20 +22,32 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        _mover.CommandMove(_input.HorizontalAxis);
-        _animationChanger.RefreshAxisesParams(_mover.HorizontalAxis, _mover.VerticalAxis);
+        _animationChanger.RefreshAxisesParams(_input.HorizontalAxis, _mover.VerticalAxis);
+    }
+
+    private void FixedUpdate()
+    {
+        if (_input.HorizontalAxis != 0)
+            _mover.Move(_input.HorizontalAxis);        
     }
 
     private void OnEnable()
     {
-        _input.SpaceDown += ()=> _mover.CommandJump(_collisionTransmitter.IsGrounded); 
-        _collisionTransmitter.GroundCollision += _animationChanger.ChangingOnGround;
+        _input.SpaceDown += Jump;
+        _collisionTransmitter.GroundCheker.GroundCollided += _animationChanger.ChangingOnGround;
         _collisionTransmitter.CoinCollision += _wallet.AddCoin;
     }
 
     private void OnDisable()
-    {
-        _collisionTransmitter.GroundCollision -= _animationChanger.ChangingOnGround;
+    {   
+        _input.SpaceDown -= Jump;
+        _collisionTransmitter.GroundCheker.GroundCollided -= _animationChanger.ChangingOnGround;
         _collisionTransmitter.CoinCollision -= _wallet.AddCoin;
+    }
+
+    private void Jump()
+    {
+        if (_collisionTransmitter.GroundCheker.IsGrounded)
+            _mover.Jump();
     }
 }

@@ -7,13 +7,11 @@ public class AnimationChanger : MonoBehaviour
     private const string Vertical = nameof(Vertical);
     private const string IsGround = nameof(IsGround);    
 
-    private Animator _animator;
-    private ChangerHorizontalRotation _horizontalRotation;
+    private Animator _animator;    
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
-        _horizontalRotation = new ChangerHorizontalRotation(transform);
+        _animator = GetComponent<Animator>();        
     }
 
     public void ChangingOnGround(bool isGround)
@@ -26,6 +24,6 @@ public class AnimationChanger : MonoBehaviour
         _animator.SetFloat(Horizontal, Mathf.Abs(x));
         _animator.SetFloat(Vertical, y);
 
-        _horizontalRotation.DefineRotation(x);
+        ChangerRotation.DefineAxisX(x, transform);
     }
 }

@@ -2,19 +2,11 @@
 using UnityEngine;
 
 public class CollisionTransmitter : MonoBehaviour
-{
-    [SerializeField] private GroundCheker _groundCheker;        
-
+{    
     public event Action<Enemy> EnemyCollision;
     public event Action<Coin> CoinCollision;
-    public event Action<bool> GroundCollision;
 
-    public bool IsGrounded => _groundCheker.IsGrounded;    
-
-    private void Awake()
-    {
-        _groundCheker.GroundCollided += (bool isGround) => GroundCollision?.Invoke(isGround);
-    }
+    [field: SerializeField] public GroundCheker GroundCheker { get; private set; }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {                
