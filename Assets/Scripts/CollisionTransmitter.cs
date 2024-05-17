@@ -5,6 +5,7 @@ public class CollisionTransmitter : MonoBehaviour
 {    
     public event Action<Enemy> EnemyCollision;
     public event Action<Coin> CoinCollision;
+    public event Action<AidKit> AidKitCollision;
 
     [field: SerializeField] public GroundCheker GroundCheker { get; private set; }
 
@@ -18,5 +19,8 @@ public class CollisionTransmitter : MonoBehaviour
     {
         if (collision.transform.TryGetComponent(out Coin coin))
             CoinCollision?.Invoke(coin);
+
+        if (collision.transform.TryGetComponent(out AidKit aidKit))
+            AidKitCollision?.Invoke(aidKit);
     }
 }

@@ -7,9 +7,10 @@ public class PointsMover : MonoBehaviour
     [SerializeField] private float _speed = 1;
     [SerializeField] protected Transform _parentPoints;
 
-    private int _indexPoint;
-    private Vector3 _targetPosition;
-    private Transform[] _points;    
+    private int _indexPoint;    
+    private Transform[] _points;
+
+    public Vector3 TargetPosition { get; private set; }
 
     private void OnValidate()
     {
@@ -40,22 +41,22 @@ public class PointsMover : MonoBehaviour
     private void Start()
     {
         _indexPoint = StartIndexPoint;
-        _targetPosition = _points[_indexPoint].position;
+        TargetPosition = _points[_indexPoint].position;
     }
 
-    public void Update()
+    public void Move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _targetPosition, _speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, TargetPosition, _speed * Time.deltaTime);
 
-        if (transform.position == _targetPosition)
+        if (transform.position == TargetPosition)
             SetTargetPoint();
     }
 
     private void SetTargetPoint()
     {
         _indexPoint = ++_indexPoint % _points.Length;
-        _targetPosition = _points[_indexPoint].position;
+        TargetPosition = _points[_indexPoint].position;
         
-        ChangerRotation.DefineAxisX(transform.position.x - _targetPosition.x, transform);
+        transform.eulerAngles = ChangerRotation.GetAxisDirection(transform.position.x - TargetPosition.x);
     }
 }

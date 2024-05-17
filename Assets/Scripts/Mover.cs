@@ -30,4 +30,10 @@ public class Mover : MonoBehaviour
     {
         _rigidbody2D.AddForce(transform.up * _forceJump, ForceMode2D.Impulse);
     }
+
+    public void CastAway(Transform source)
+    {
+        Vector2 direction = (transform.position - source.position);             
+        _rigidbody2D.AddForce(direction.normalized * _forceJump, ForceMode2D.Impulse);        
+    }
 }
