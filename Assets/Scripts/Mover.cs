@@ -8,9 +8,7 @@ public class Mover : MonoBehaviour
     [SerializeField] private float _acceleration;
     [SerializeField] private float _forceJump;
 
-    private Rigidbody2D _rigidbody2D;
-
-    public float VerticalAxis => _rigidbody2D.velocity.y;
+    private Rigidbody2D _rigidbody2D;    
 
     private void Awake()
     {
@@ -31,9 +29,9 @@ public class Mover : MonoBehaviour
         _rigidbody2D.AddForce(transform.up * _forceJump, ForceMode2D.Impulse);
     }
 
-    public void CastAway(Transform source)
+    public void CastAway(Enemy enemy)
     {
-        Vector2 direction = (transform.position - source.position);             
+        Vector2 direction = (transform.position - enemy.transform.position);             
         _rigidbody2D.AddForce(direction.normalized * _forceJump, ForceMode2D.Impulse);        
     }
 }

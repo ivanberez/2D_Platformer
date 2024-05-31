@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator), typeof(InputHandler), typeof(CollisionTransmitter))]
 public class AnimationChanger : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
@@ -9,27 +9,48 @@ public class AnimationChanger : MonoBehaviour
     private const string Attacked = nameof(Attacked);
 
     private Animator _animator;
+    private InputHandler _inputHandler;
+    private CollisionTransmitter _collisionTransmitter;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _inputHandler = GetComponent<InputHandler>();
+        _collisionTransmitter = GetComponent<CollisionTransmitter>();
     }
 
-    public void ChangingOnGround(bool isGround)
+    private void Update()
+    {
+        RefreshAxisesParams(_inputHandler.HorizontalAxis, _inputHandler.VerticalAxis);
+    }
+
+    private void OnEnable()
+    {
+        _collisionTransmitter.GroundCheker.GroundCollided += ChangingOnGround;
+        _inputHandler.MouseDownEvent += ViewAttack;
+    }
+
+    private void OnDisable()
+    {
+        _collisionTransmitter.GroundCheker.GroundCollided -= ChangingOnGround;
+        _inputHandler.MouseDownEvent -= ViewAttack;
+    }
+
+    private void ChangingOnGround(bool isGround)
     {
         _animator.SetBool(IsGround, isGround);
     }
 
-    public void RefreshAxisesParams(float x, float y)
+    private void RefreshAxisesParams(float horizontal, float vertical)
     {
-        _animator.SetFloat(Horizontal, Mathf.Abs(x));
-        _animator.SetFloat(Vertical, y);
+        _animator.SetFloat(Horizontal, Mathf.Abs(horizontal));
+        _animator.SetFloat(Vertical, vertical);
 
-        if (x != 0)
-            transform.eulerAngles = ChangerRotation.GetAxisDirection(x);
+        if (horizontal != 0)
+            transform.eulerAngles = ChangerRotation.GetAxisDirection(horizontal);
     }
 
-    public void ViewAttack()
+    private void ViewAttack()
     {        
         _animator.SetTrigger(Attacked);
     }

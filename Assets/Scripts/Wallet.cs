@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 
-public class Wallet
+[RequireComponent(typeof(CollisionTransmitter))]
+public class Wallet : MonoBehaviour 
 {
+    private CollisionTransmitter _collisionTransmitter;  
     private int _coins;
 
-    public void AddCoin(Coin coin)
+    private void Awake() => _collisionTransmitter = GetComponent<CollisionTransmitter>();    
+
+    private void OnEnable() => _collisionTransmitter.CoinCollision += AddCoin;
+
+    private void OnDisable() => _collisionTransmitter.CoinCollision -= AddCoin;
+    
+    private void AddCoin(Coin coin)
     {
         _coins += coin.ToPickUp();
         Debug.Log("Coins: " + _coins);

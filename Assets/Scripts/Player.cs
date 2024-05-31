@@ -1,37 +1,20 @@
-using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Mover), typeof(InputHandler))]
-[RequireComponent(typeof(AnimationChanger), typeof(CollisionTransmitter))]
+[RequireComponent(typeof(Mover), typeof(Health), typeof(InputHandler))]
+[RequireComponent(typeof(AnimationChanger), typeof(CollisionTransmitter), typeof(Wallet))]
 public class Player : MonoBehaviour
-{
-    [SerializeField] private int _maxHealth;
-    [SerializeField] private AtackElement _attackElement;
-
+{        
     private Mover _mover;
-    private InputHandler _input;
-    private AnimationChanger _animationChanger;
-    private CollisionTransmitter _collisionTransmitter;
-
-    private Wallet _wallet;
     private Health _health;
-
-    private Transform _damageSource;
-
+    private InputHandler _input;    
+    private CollisionTransmitter _collisionTransmitter;        
+    
     private void Awake()
     {
         _mover = GetComponent<Mover>();
-        _input = GetComponent<InputHandler>();
-        _animationChanger = GetComponent<AnimationChanger>();
+        _health = GetComponent<Health>();
+        _input = GetComponent<InputHandler>();        
         _collisionTransmitter = GetComponent<CollisionTransmitter>();
-
-        _wallet = new Wallet();
-        _health = new Health(_maxHealth);
-    }
-
-    private void Update()
-    {
-        _animationChanger.RefreshAxisesParams(_input.HorizontalAxis, _mover.VerticalAxis);
     }
 
     private void FixedUpdate()
@@ -41,51 +24,19 @@ public class Player : MonoBehaviour
 
         if (_input.IsSpaceDown && _collisionTransmitter.GroundCheker.IsGrounded)
             _mover.Jump();
-
-        if (_damageSource)
-        {
-            _mover.CastAway(_damageSource);
-            _damageSource = null;
-        }
     }
 
     private void OnEnable()
-    {
-        _collisionTransmitter.GroundCheker.GroundCollided += _animationChanger.ChangingOnGround;
-        _collisionTransmitter.CoinCollision += _wallet.AddCoin;
-        _collisionTransmitter.AidKitCollision += _health.TakeAidKit;
-        _collisionTransmitter.EnemyCollision += TakeDamage;
-        _input.MouseDownEvent += Attack;
-        _health.DeathEvent += Death;
-        _health.HealthChanged += ViewHealth;
+    {     
+        _collisionTransmitter.EnemyCollision += _mover.CastAway;        
+        _health.DeathEvent += Death;        
     }
 
     private void OnDisable()
-    {
-        _collisionTransmitter.GroundCheker.GroundCollided -= _animationChanger.ChangingOnGround;
-        _collisionTransmitter.CoinCollision -= _wallet.AddCoin;
-        _collisionTransmitter.AidKitCollision -= _health.TakeAidKit;
-        _collisionTransmitter.EnemyCollision -= TakeDamage;
-        _input.MouseDownEvent -= Attack;
+    {      
+        _collisionTransmitter.EnemyCollision -= _mover.CastAway;        
         _health.DeathEvent -= Death;
-    }
-
-    private void ViewHealth(int health)
-    {
-        Debug.Log("Health player: " + health);
-    }
-
-    private void Attack()
-    {
-        _animationChanger.ViewAttack();
-        _attackElement.Attack();
-    }
-
-    private void TakeDamage(Enemy enemy)
-    {
-        _health.TakeDamage(enemy.Damage);
-        _damageSource = enemy.transform;
-    }
+    }    
 
     private void Death()
     {

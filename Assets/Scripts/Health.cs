@@ -1,38 +1,56 @@
 ﻿using System;
+using UnityEngine;
 
-public class Health
+[RequireComponent(typeof(CollisionTransmitter))]
+public class Health : MonoBehaviour 
 {
-    private int _max;
-    private int _curent;
-
+    [SerializeField] private int _max = 3;
+    private int _count;
+    private CollisionTransmitter _transmitter;
+    
     public event Action DeathEvent;
-    public event Action<int> HealthChanged;
 
-    public Health(int max)
+    private void Awake()
     {
-        _curent = _max = max;
+        _count = _max;
+        _transmitter = GetComponent<CollisionTransmitter>();
+    }    
+
+    private void OnEnable()    
+    {        
+        _transmitter.EnemyCollision += TakeDamage;
+        _transmitter.AidKitCollision += TakeAidKit;
     }
 
-    public void TakeDamage(int damage)
+    private void OnDisable()
     {
-        _curent -= damage;
-        HealthChanged?.Invoke(_curent);
-        
-        if (_curent <= 0)
-            DeathEvent?.Invoke();
+        _transmitter.EnemyCollision -= TakeDamage;
+        _transmitter.AidKitCollision -= TakeAidKit;
     }
 
-    public void TakeAidKit(AidKit aidKit)
+    private void TakeAidKit(AidKit aidKit)
     {
-        if (_curent >= _max)
+        if (_count >= _max)
+        {
             return;
+        }
         else
         {
-            _curent += aidKit.PickUp();
-            HealthChanged?.Invoke(_curent);
+            _count += aidKit.PickUp();            
 
-            if (_curent > _max)
-                _curent = _max;           
+            if (_count > _max)
+                _count = _max;
+
+            Debug.Log("Take aid kit. Health: " + _count);
         }                    
+    }
+
+    private void TakeDamage(Enemy ememy)
+    {
+        _count -= ememy.Damage;        
+        Debug.Log("Take damage. Health: " + _count);
+
+        if (_count <= 0)
+            DeathEvent?.Invoke();
     }
 }

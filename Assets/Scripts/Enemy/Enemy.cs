@@ -2,15 +2,17 @@ using UnityEngine;
 
 [RequireComponent(typeof(PointsMover))]
 public class Enemy : MonoBehaviour
-{    
+{
+    [SerializeField] private float _attackSpeed = 10f;
     private PointsMover _pointsMover;
-
+    
     [field: SerializeField, Min(1)] public int Damage { get; private set; } = 1;
 
     private void Awake()
     {
         _pointsMover = GetComponent<PointsMover>();
     }
+
     private void Update()
     {
         if (TryDetectPlayer(out Player player))
@@ -22,7 +24,7 @@ public class Enemy : MonoBehaviour
     private void Attack(Player player)
     {
         Vector3 targetPosition = new Vector3(player.transform.position.x, transform.position.y);
-        transform.position = Vector3.Lerp(transform.position, targetPosition, 10 * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, _attackSpeed * Time.deltaTime);
     }
 
     private bool TryDetectPlayer(out Player player)
@@ -31,9 +33,7 @@ public class Enemy : MonoBehaviour
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction);
 
         foreach (RaycastHit2D hit in hits)
-            if (hit.collider == null)
-                continue;
-            else if (hit.transform.TryGetComponent(out player))
+            if (hit.transform.TryGetComponent(out player))
                 return true;
 
         player = null;
@@ -41,7 +41,7 @@ public class Enemy : MonoBehaviour
     }
 
     public void TakeDamage()
-    {
+    {                
         Destroy(gameObject);
     }
 }
