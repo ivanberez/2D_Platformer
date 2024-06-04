@@ -4,6 +4,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _attackSpeed = 10f;
+    [SerializeField] private DetectingZone _detectingZone;
+
     private PointsMover _pointsMover;
     
     [field: SerializeField, Min(1)] public int Damage { get; private set; } = 1;
@@ -14,11 +16,16 @@ public class Enemy : MonoBehaviour
     }
 
     private void Update()
-    {
-        if (TryDetectPlayer(out Player player))
+    {             
+        if (HasLooking(out Player player))
             Attack(player);
         else
             _pointsMover.Move();
+    }
+
+    public void TakeDamage()
+    {
+        Destroy(gameObject);
     }
 
     private void Attack(Player player)
@@ -27,21 +34,18 @@ public class Enemy : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPosition, _attackSpeed * Time.deltaTime);
     }
 
-    private bool TryDetectPlayer(out Player player)
+    private bool HasLooking(out Player player)
     {
-        Vector2 direction = _pointsMover.TargetPosition - transform.position;
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, direction);
+        if(_detectingZone.Player != null)
+        {
+            player = _detectingZone.Player;
+            float directionToPlayer = player.transform.position.x - transform.position.x;
+            float moveDirection = _pointsMover.TargetPosition.x - transform.position.x;
 
-        foreach (RaycastHit2D hit in hits)
-            if (hit.transform.TryGetComponent(out player))
-                return true;
-
+            return Mathf.Sign(directionToPlayer) == Mathf.Sign(moveDirection);         
+        }
+        
         player = null;
         return false;
-    }
-
-    public void TakeDamage()
-    {                
-        Destroy(gameObject);
-    }
+    }   
 }

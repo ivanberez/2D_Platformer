@@ -36,7 +36,7 @@ public class Health : MonoBehaviour
         }
         else
         {
-            _count += aidKit.PickUp();            
+            _count += aidKit.ToPickUp();            
 
             if (_count > _max)
                 _count = _max;

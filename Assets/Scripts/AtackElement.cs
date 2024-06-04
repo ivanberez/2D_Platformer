@@ -19,7 +19,7 @@ public class AtackElement : MonoBehaviour
     private void OnDisable() => _input.MouseDownEvent -= Attack;
 
     private void Attack()
-    {
+    {                
         Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, _size, _angle);
 
         foreach (Collider2D hit in hits)                    

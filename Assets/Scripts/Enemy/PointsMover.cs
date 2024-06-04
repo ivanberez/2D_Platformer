@@ -1,15 +1,13 @@
+using System.Linq;
 using UnityEngine;
 
 public class PointsMover : MonoBehaviour
-{
-    private const int StartIndexPoint = 0;
-
+{    
     [SerializeField] private float _speed = 1;
     [SerializeField] protected Transform _parentPoints;
 
     private int _indexPoint;    
     private Transform[] _points;
-
     public Vector3 TargetPosition { get; private set; }
 
     private void OnValidate()
@@ -34,13 +32,13 @@ public class PointsMover : MonoBehaviour
                     _points[i] = _parentPoints.GetChild(i).transform;
 
                 enabled = true;
-            }
+            }            
         }
     }
 
     private void Start()
     {
-        _indexPoint = StartIndexPoint;
+        _indexPoint = 0;
         TargetPosition = _points[_indexPoint].position;
     }
 

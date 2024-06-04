@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _count: 1
+  _timeDestroy: 0.3
 --- !u!58 &1642534166625611826
 CircleCollider2D:
   m_ObjectHideFlags: 0

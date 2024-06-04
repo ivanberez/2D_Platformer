@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider2D))]
 public class GroundCheker : MonoBehaviour
-{
+{   
     [SerializeField] private LayerMask _callbackLayersMask;    
 
     public event Action<bool> GroundCollided;
@@ -16,13 +17,13 @@ public class GroundCheker : MonoBehaviour
         collider.contactCaptureLayers = _callbackLayersMask;        
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         GroundCollided?.Invoke(IsGrounded = true);
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         GroundCollided?.Invoke(IsGrounded = false);
-    }    
+    }
 }
