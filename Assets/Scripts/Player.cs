@@ -3,17 +3,17 @@ using UnityEngine;
 [RequireComponent(typeof(Mover), typeof(Health), typeof(InputHandler))]
 [RequireComponent(typeof(AnimationChanger), typeof(CollisionTransmitter), typeof(Wallet))]
 public class Player : MonoBehaviour
-{        
+{
     private Mover _mover;
     private Health _health;
-    private InputHandler _input;    
-    private CollisionTransmitter _collisionTransmitter;        
-    
+    private InputHandler _input;
+    private CollisionTransmitter _collisionTransmitter;
+
     private void Awake()
     {
         _mover = GetComponent<Mover>();
         _health = GetComponent<Health>();
-        _input = GetComponent<InputHandler>();        
+        _input = GetComponent<InputHandler>();
         _collisionTransmitter = GetComponent<CollisionTransmitter>();
     }
 
@@ -27,16 +27,29 @@ public class Player : MonoBehaviour
     }
 
     private void OnEnable()
-    {     
-        _collisionTransmitter.EnemyCollision += _mover.CastAway;        
-        _health.DeathEvent += Death;        
+    {
+        _collisionTransmitter.EnemyCollision += TakeDamage;
+        _collisionTransmitter.AidKitCollision += TakeAidKit;
+        _health.Ending += Death;
     }
 
     private void OnDisable()
-    {      
-        _collisionTransmitter.EnemyCollision -= _mover.CastAway;        
-        _health.DeathEvent -= Death;
-    }    
+    {
+        _collisionTransmitter.EnemyCollision -= TakeDamage;
+        _health.Ending -= Death;
+    }
+
+    private void TakeAidKit(AidKit kit)
+    {
+        if (_health.IsUnwell)
+            _health.Add(kit.ToPickUp());
+    }
+
+    private void TakeDamage(Enemy enemy)
+    {
+        _health.Subtract(enemy.Damage);
+        _mover.CastAway(enemy);
+    }
 
     private void Death()
     {

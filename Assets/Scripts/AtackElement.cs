@@ -4,6 +4,8 @@ public class AtackElement : MonoBehaviour
 {
     private readonly float _angle = 0;
 
+    [SerializeField, Min(0.1f)] private float _damage = 1;
+    [Space]
     [SerializeField] private InputHandler _input;
     [SerializeField] private Vector2 _size = new Vector2(1.8f, 0.5f);
     [SerializeField] private bool _isDrow;
@@ -24,6 +26,6 @@ public class AtackElement : MonoBehaviour
 
         foreach (Collider2D hit in hits)                    
             if (hit.transform.TryGetComponent(out Enemy enemy))
-                enemy.TakeDamage();        
+                enemy.TakeDamage(_damage);        
     }
 }

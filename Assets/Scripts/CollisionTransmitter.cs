@@ -17,10 +17,17 @@ public class CollisionTransmitter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.TryGetComponent(out Coin coin))
-            CoinCollision?.Invoke(coin);
-
-        if (collision.transform.TryGetComponent(out AidKit aidKit))
-            AidKitCollision?.Invoke(aidKit);
+        if (collision.transform.TryGetComponent(out Item item))
+        {
+            switch (item) 
+            {
+                case Coin:
+                    CoinCollision?.Invoke((Coin)item);
+                    break;
+                case AidKit:
+                    AidKitCollision?.Invoke((AidKit)item);
+                    break;
+            }
+        }            
     }
 }

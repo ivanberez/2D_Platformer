@@ -1,56 +1,32 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(CollisionTransmitter))]
-public class Health : MonoBehaviour 
+public class Health : MonoBehaviour, IDataIndication
 {
-    [SerializeField] private int _max = 3;
-    private int _count;
-    private CollisionTransmitter _transmitter;
-    
-    public event Action DeathEvent;
+    public event Action Ending;
+    public event Action Changed;
 
-    private void Awake()
+    [SerializeField, Min(0)] private float _curent = 1;
+    [SerializeField, Min(0)] private float _max = 1;
+
+    public bool IsUnwell => _curent < _max;
+    public float Curent
     {
-        _count = _max;
-        _transmitter = GetComponent<CollisionTransmitter>();
-    }    
-
-    private void OnEnable()    
-    {        
-        _transmitter.EnemyCollision += TakeDamage;
-        _transmitter.AidKitCollision += TakeAidKit;
-    }
-
-    private void OnDisable()
-    {
-        _transmitter.EnemyCollision -= TakeDamage;
-        _transmitter.AidKitCollision -= TakeAidKit;
-    }
-
-    private void TakeAidKit(AidKit aidKit)
-    {
-        if (_count >= _max)
+        get => _curent;
+        private set
         {
-            return;
+            _curent = value;
+            Changed?.Invoke();
+
+            if (_curent <= 0)
+                Ending?.Invoke();
         }
-        else
-        {
-            _count += aidKit.ToPickUp();            
-
-            if (_count > _max)
-                _count = _max;
-
-            Debug.Log("Take aid kit. Health: " + _count);
-        }                    
     }
+    public float Max => _max;
 
-    private void TakeDamage(Enemy ememy)
-    {
-        _count -= ememy.Damage;        
-        Debug.Log("Take damage. Health: " + _count);
+    private void Start() => Curent = Max;
 
-        if (_count <= 0)
-            DeathEvent?.Invoke();
-    }
+    public void Add(float count) => Curent += Mathf.Clamp(count, 0, Max - Curent);
+
+    public void Subtract(float count) => Curent -= Mathf.Clamp(count, 0, Curent);
 }

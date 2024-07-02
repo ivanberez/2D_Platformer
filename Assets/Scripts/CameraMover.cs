@@ -6,7 +6,12 @@ public class CameraMover : MonoBehaviour
     [SerializeField] private Vector2 _minPositon;
     [SerializeField] private Transform _target;
     [SerializeField] private float _speed = 1;
-    
+
+    private void OnValidate()
+    {
+        Update();
+    }
+
     private void Update()
     {
         if (_target)

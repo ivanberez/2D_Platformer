@@ -1,18 +1,21 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(PointsMover))]
+[RequireComponent(typeof(PointsMover), typeof(Health))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _attackSpeed = 10f;
-    [SerializeField] private DetectingZone _detectingZone;
+    [SerializeField] private DetectingZone _detectingZone;    
 
     private PointsMover _pointsMover;
+    private Health _health;
     
     [field: SerializeField, Min(1)] public int Damage { get; private set; } = 1;
 
     private void Awake()
     {
         _pointsMover = GetComponent<PointsMover>();
+        _health = GetComponent<Health>();
     }
 
     private void Update()
@@ -23,9 +26,19 @@ public class Enemy : MonoBehaviour
             _pointsMover.Move();
     }
 
-    public void TakeDamage()
+    private void OnEnable()
     {
-        Destroy(gameObject);
+        _health.Ending += Die;
+    }
+
+    private void OnDisable()
+    {
+        _health.Ending -= Die;
+    }
+
+    public void TakeDamage(float damage)
+    {         
+        _health.Subtract(damage);        
     }
 
     private void Attack(Player player)
@@ -47,5 +60,10 @@ public class Enemy : MonoBehaviour
         
         player = null;
         return false;
-    }   
+    }  
+    
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
 }
