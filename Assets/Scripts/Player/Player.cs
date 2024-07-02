@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationChanger), typeof(CollisionTransmitter), typeof(Wallet))]
 public class Player : MonoBehaviour
 {
+    [SerializeField] private VampirSkill _vampirSkill;
+
     private Mover _mover;
     private Health _health;
     private InputHandler _input;
@@ -14,7 +16,7 @@ public class Player : MonoBehaviour
         _mover = GetComponent<Mover>();
         _health = GetComponent<Health>();
         _input = GetComponent<InputHandler>();
-        _collisionTransmitter = GetComponent<CollisionTransmitter>();
+        _collisionTransmitter = GetComponent<CollisionTransmitter>();        
     }
 
     private void FixedUpdate()
@@ -31,12 +33,14 @@ public class Player : MonoBehaviour
         _collisionTransmitter.EnemyCollision += TakeDamage;
         _collisionTransmitter.AidKitCollision += TakeAidKit;
         _health.Ending += Death;
+        _vampirSkill.Impacted += _health.Add;
     }
 
     private void OnDisable()
     {
         _collisionTransmitter.EnemyCollision -= TakeDamage;
         _health.Ending -= Death;
+        _vampirSkill.Impacted -= _health.Add;
     }
 
     private void TakeAidKit(AidKit kit)
