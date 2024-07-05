@@ -21,7 +21,6 @@ public abstract class IndicationElement : MonoBehaviour
         if (_coroutine != null)
             StopCoroutine(_coroutine);
 
-        _coroutine = StartCoroutine(SmoothRoutine(dataIndication));
-        Debug.Log($"data: {dataIndication}");
+        _coroutine = StartCoroutine(SmoothRoutine(dataIndication));        
     }
 }

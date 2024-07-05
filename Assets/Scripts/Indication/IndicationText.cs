@@ -2,10 +2,18 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+public enum TypeIndicationText
+{
+    Simple,
+    Present,
+    OnlyCurent,
+    OnlyCurentReverse
+}
+
 [RequireComponent(typeof(TextMeshProUGUI))]
 public class IndicationText : IndicationElement
-{        
-    [SerializeField] private bool _isPercentages;
+{
+    [SerializeField] private TypeIndicationText _type;
 
     private TextMeshProUGUI _textMeshPro;
     private float _tempValue;
@@ -34,7 +42,21 @@ public class IndicationText : IndicationElement
     }
 
     private void ChangeText(float curent, float max)
-    {        
-        _textMeshPro.text = _isPercentages ? string.Format("{0:P0}", curent / max) : string.Format($"{curent:n0} / {max:n0}");
+    {
+        switch (_type)
+        {
+            case TypeIndicationText.Simple:
+                _textMeshPro.text = string.Format($"{curent:n0}/{max:n0}");
+                break;
+            case TypeIndicationText.Present:
+                _textMeshPro.text = string.Format("{0:P0}", curent / max);
+                break;
+            case TypeIndicationText.OnlyCurent:
+                _textMeshPro.text = curent.ToString();
+                break;
+            case TypeIndicationText.OnlyCurentReverse:
+                _textMeshPro.text = (max - curent).ToString();
+                break;
+        }       
     }
 }

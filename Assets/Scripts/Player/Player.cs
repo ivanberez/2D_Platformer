@@ -4,10 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationChanger), typeof(CollisionTransmitter), typeof(Wallet))]
 public class Player : MonoBehaviour
 {
+    [SerializeField] private VampirSkill _vampirSkill;
+
     private Mover _mover;
     private Health _health;
     private InputHandler _input;
-    private CollisionTransmitter _collisionTransmitter;
+    private CollisionTransmitter _collisionTransmitter;    
     
     private bool _isCanJump;
 
@@ -31,6 +33,8 @@ public class Player : MonoBehaviour
         _collisionTransmitter.AidKitCollision += TakeAidKit;
         _health.Ending += Death;
         _input.JumpKeyDownEvent += DownJumpKey;
+        _input.VampirKeyDownEvent += _vampirSkill.Activate;
+        _vampirSkill.Impacted += _health.Add;
     }
 
     private void OnDisable()
@@ -38,7 +42,9 @@ public class Player : MonoBehaviour
         _collisionTransmitter.EnemyCollision -= TakeDamage;
         _collisionTransmitter.AidKitCollision -= TakeAidKit;
         _health.Ending -= Death;
-        _input.JumpKeyDownEvent += DownJumpKey;
+        _input.JumpKeyDownEvent -= DownJumpKey;
+        _input.VampirKeyDownEvent -= _vampirSkill.Activate;
+        _vampirSkill.Impacted -= _health.Add;
     }
 
     private void Move()

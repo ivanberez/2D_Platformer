@@ -1,11 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(PointsMover), typeof(Health))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float _attackSpeed = 10f;
-    [SerializeField] private DetectingZone _detectingZone;    
+    [SerializeField] private float _attackSpeed = 10f;    
+    [SerializeField] private LayerMask _layerMaskAttack;
 
     private PointsMover _pointsMover;
     private Health _health;
@@ -49,17 +48,19 @@ public class Enemy : MonoBehaviour
 
     private bool HasLooking(out Player player)
     {
-        if(_detectingZone.Player != null)
-        {
-            player = _detectingZone.Player;
-            float directionToPlayer = player.transform.position.x - transform.position.x;
-            float moveDirection = _pointsMover.TargetPosition.x - transform.position.x;
+        float distance = _pointsMover.TargetPosition.x - transform.position.x;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, distance, _layerMaskAttack);        
 
-            return Mathf.Sign(directionToPlayer) == Mathf.Sign(moveDirection);         
+        if(hit)
+        {
+            Debug.Log(hit.transform.name);
+            return hit.collider.TryGetComponent(out player);
         }
-        
-        player = null;
-        return false;
+        else
+        {
+            player = null;
+            return false; 
+        }   
     }  
     
     private void Die()
