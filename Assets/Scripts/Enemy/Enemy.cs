@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour, IVampirismSubject
     private Health _health;
     
     [field: SerializeField, Min(1)] public int Damage { get; private set; } = 1;
+    public Vector2 Position => transform.position;
 
     private void Awake()
     {
@@ -19,10 +20,10 @@ public class Enemy : MonoBehaviour, IVampirismSubject
 
     private void Update()
     {             
-        if (HasLooking(out Player player))
-            Attack(player);
-        else
-            _pointsMover.Move();
+        //if (HasLooking(out Player player))
+        //    Attack(player);
+        ////else
+        //    _pointsMover.Move();
     }
 
     private void OnEnable()

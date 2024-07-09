@@ -718,7 +718,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15
+      m_AnimationSpeed: 15.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -8, y: -6, z: 0}
@@ -910,7 +910,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15
+      m_AnimationSpeed: 15.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 0, y: -6, z: 0}
@@ -1054,7 +1054,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15
+      m_AnimationSpeed: 15.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: -6, z: 0}
@@ -1668,11 +1668,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1459264017850339307, guid: f8d8141c5b9cb1f4eaa0185d6a54a08b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.36
+      value: -4.01
       objectReference: {fileID: 0}
     - target: {fileID: 1459264017850339307, guid: f8d8141c5b9cb1f4eaa0185d6a54a08b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.42
+      value: 2.81
       objectReference: {fileID: 0}
     - target: {fileID: 1459264017850339307, guid: f8d8141c5b9cb1f4eaa0185d6a54a08b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2087,7 +2087,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.03, y: 0.46, z: -10}
+  m_LocalPosition: {x: -4, y: 2.2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2197,7 +2197,7 @@ Transform:
   m_GameObject: {fileID: 531854004}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.03, y: -1.43, z: 0}
+  m_LocalPosition: {x: -5.61, y: 2.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5206,7 +5206,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15.000001
+      m_AnimationSpeed: 15
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 8, y: -6, z: 0}
@@ -5254,7 +5254,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15
+      m_AnimationSpeed: 15.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 10, y: -6, z: 0}
@@ -9619,8 +9619,9 @@ GameObject:
   - component: {fileID: 2055066894}
   - component: {fileID: 2055066895}
   - component: {fileID: 2055066896}
-  - component: {fileID: 2055066897}
   - component: {fileID: 2055066898}
+  - component: {fileID: 2055066900}
+  - component: {fileID: 2055066899}
   m_Layer: 0
   m_Name: VampirSphere
   m_TagString: Untagged
@@ -9638,7 +9639,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.09515083, w: 0.99546295}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 531854007}
@@ -9707,10 +9708,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfeda20cb334444cb692e2494640496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radios: 0.5
   _delay: 0.1
   _powerSkill: 0.1
---- !u!58 &2055066897
+--- !u!114 &2055066898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055066893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee6c9c8eb9bb21f4e87f63390de09618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeAction: 20
+  _timeCooldown: 3
+--- !u!114 &2055066899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2055066893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa78cf6f81613e4283aee8c5de2b8bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radios: 0.475
+--- !u!58 &2055066900
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9739,26 +9766,12 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &2055066898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2055066893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee6c9c8eb9bb21f4e87f63390de09618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timeAction: 5
-  _timeCooldown: 3
+  m_Radius: 0.47500005
 --- !u!1001 &799384012598381776
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9842,7 +9855,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1459264017850339307, guid: f8d8141c5b9cb1f4eaa0185d6a54a08b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.954
+      value: -7.47
       objectReference: {fileID: 0}
     - target: {fileID: 1459264017850339307, guid: f8d8141c5b9cb1f4eaa0185d6a54a08b, type: 3}
       propertyPath: m_LocalPosition.y

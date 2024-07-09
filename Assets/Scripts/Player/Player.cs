@@ -1,3 +1,4 @@
+using Assets.Scripts.Skills;
 using UnityEngine;
 
 [RequireComponent(typeof(Mover), typeof(Health), typeof(InputHandler))]

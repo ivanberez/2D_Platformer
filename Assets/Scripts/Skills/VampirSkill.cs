@@ -1,117 +1,69 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D), typeof(SpriteRenderer), typeof(TimerSkill))]
-public class VampirSkill : MonoBehaviour
+namespace Assets.Scripts.Skills
 {
-    [SerializeField] private float _radios = 1f;
-    [SerializeField, Min(0.1f)] private float _delay = 0.5f;
-    [SerializeField, Min(0.01f)] private float _powerSkill = 0.2f;
-
-    private List<IVampirismSubject> _vampirismSubjects;
-
-    private TimerSkill _timerSkill;
-
-    private Coroutine _coroutineAction;
-    private WaitForSeconds _waitDelay;
-
-    private SpriteRenderer _spriteRenderer;
-    private CircleCollider2D _circleCollider;
-
-    public bool IsCanUse => _timerSkill.IsWork == false;
-
-    public event Action<float> Impacted;
-
-    private void OnValidate()
+    [RequireComponent(typeof(VampirismCircle), typeof(TimerSkill))]
+    public class VampirSkill : MonoBehaviour
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _circleCollider = GetComponent<CircleCollider2D>();
-        _timerSkill = GetComponent<TimerSkill>();
+        [SerializeField, Min(0.1f)] private float _delay = 0.5f;
+        [SerializeField, Min(0.01f)] private float _powerSkill = 0.2f;
 
-        _circleCollider.radius = _radios;
-        _circleCollider.isTrigger = true;        
-    }
+        private VampirismCircle _circle;
+        private TimerSkill _timerSkill;
 
-    private void OnEnable()
-    {
-        _timerSkill.ActionFinishing += Deactivate;
-    }
+        private Coroutine _coroutineAction;
+        private WaitForSeconds _waitDelay;
 
-    private void OnDisable()
-    {
-        _timerSkill.ActionFinishing -= Deactivate;
-    }
+        public event Action<float> Impacted;
 
-    private void Awake()
-    {
-        _vampirismSubjects = new List<IVampirismSubject>();
-        _waitDelay = new WaitForSeconds(_delay);
-        HideSkill();
-    }
+        public bool IsCanUse => _timerSkill.IsWork == false;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IVampirismSubject vampirismSubject))
+        private void OnEnable()
         {
-            _vampirismSubjects.Add(vampirismSubject);
+            _timerSkill.ActionFinishing += Deactivate;
         }
-    }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.TryGetComponent(out IVampirismSubject vampirismSubject))
+        private void OnDisable()
         {
-            _vampirismSubjects.Remove(vampirismSubject);
+            _timerSkill.ActionFinishing -= Deactivate;
         }
-    }
 
-    public void Activate()
-    {
-        if (IsCanUse)
+        private void Awake()
         {
-            _spriteRenderer.enabled = true;
-            _circleCollider.enabled = true;
+            _timerSkill = GetComponent<TimerSkill>();
+            _circle = GetComponent<VampirismCircle>();
 
-            _coroutineAction = StartCoroutine(ActionSkillRoutine());
-            _timerSkill.Run();
+            _waitDelay = new WaitForSeconds(_delay);
         }
-    }
 
-    private IEnumerator ActionSkillRoutine()
-    {
-        float resultSkill;
-
-        while (true)
+        public void Activate()
         {
-            resultSkill = 0f;
-
-            for (int i = 0; i < _vampirismSubjects.Count; i++)
+            if (IsCanUse)
             {
-                if (_vampirismSubjects[i] != null)
-                    resultSkill += _vampirismSubjects[i].GetSubstractHealth(_powerSkill);
+                _circle.Enable();
+                _coroutineAction = StartCoroutine(ActionSkillRoutine());
+                _timerSkill.Run();
             }
-
-            Impacted?.Invoke(resultSkill);
-
-            yield return _waitDelay;
         }
-    }
 
-    private void Deactivate()
-    {
-        HideSkill();
+        private IEnumerator ActionSkillRoutine()
+        {
+            while (enabled)
+            {
+                if (_circle.TryGetNearSubject(out IVampirismSubject target))
+                    Impacted?.Invoke(target.GetSubstractHealth(_powerSkill));
 
-        _vampirismSubjects.Clear();
-     
-        StopCoroutine(_coroutineAction);
-        _coroutineAction = null;
-    }
+                yield return _waitDelay;
+            }
+        }
 
-    private void HideSkill()
-    {
-        _spriteRenderer.enabled = false;
-        _circleCollider.enabled = false;
+        private void Deactivate()
+        {
+            _circle.Disable();
+            StopCoroutine(_coroutineAction);
+            _coroutineAction = null;
+        }
     }
 }
