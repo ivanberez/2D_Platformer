@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PointsMover), typeof(Health))]
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IVampirismSubject
 {
     [SerializeField] private float _attackSpeed = 10f;    
     [SerializeField] private LayerMask _layerMaskAttack;
@@ -52,8 +52,7 @@ public class Enemy : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, distance, _layerMaskAttack);        
 
         if(hit)
-        {
-            Debug.Log(hit.transform.name);
+        {            
             return hit.collider.TryGetComponent(out player);
         }
         else
@@ -67,4 +66,6 @@ public class Enemy : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public float GetSubstractHealth(float impactPower) => _health.Subtract(impactPower);    
 }

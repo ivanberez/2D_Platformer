@@ -29,5 +29,11 @@ public class Health : MonoBehaviour, IDataIndication
 
     public void Add(float count) => Curent += Mathf.Clamp(count, 0, Max - Curent);
 
-    public void Subtract(float count) => Curent -= Mathf.Clamp(count, 0, Curent);
+    public float Subtract(float count)
+    {
+        float resultSubtrack = Mathf.Clamp(count, 0, Curent);
+        Curent -= resultSubtrack;
+
+        return resultSubtrack;
+    }
 }

@@ -16,6 +16,7 @@ public class TimerSkill : MonoBehaviour, IDataIndication
     public event Action Changed;
     public event Action Ending;
     public event Action ActionFinishing;
+    public event Action Disabling;
 
     public bool IsWork => _coroutine != null;
 
@@ -32,6 +33,8 @@ public class TimerSkill : MonoBehaviour, IDataIndication
     public float Max => _max;
 
     private void Awake() => _curent = _max = _timeAction;
+
+    private void OnDisable() => Disabling?.Invoke();
 
     public void Run()
     {

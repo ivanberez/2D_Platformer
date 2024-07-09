@@ -526,7 +526,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15.000001
+      m_AnimationSpeed: 15
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -16, y: -6, z: 0}
@@ -790,7 +790,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15
+      m_AnimationSpeed: 15.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: -6, z: 0}
@@ -886,7 +886,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15.000001
+      m_AnimationSpeed: 15
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -1, y: -6, z: 0}
@@ -4654,7 +4654,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15.000001
+      m_AnimationSpeed: 15
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -15, y: -6, z: 0}
@@ -4750,7 +4750,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15.000001
+      m_AnimationSpeed: 15
       m_AnimationTimeOffset: 2
       m_Flags: 0
   - first: {x: -11, y: -6, z: 0}
@@ -4870,7 +4870,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15.000001
+      m_AnimationSpeed: 15
       m_AnimationTimeOffset: 2
       m_Flags: 0
   - first: {x: -6, y: -6, z: 0}
@@ -5158,7 +5158,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15.000001
+      m_AnimationSpeed: 15
       m_AnimationTimeOffset: 2
       m_Flags: 0
   - first: {x: 6, y: -6, z: 0}
@@ -5206,7 +5206,7 @@ Tilemap:
       - {fileID: 21300000, guid: c8db2ccc4e419ea4aac7a6d44fefcf39, type: 3}
       - {fileID: 21300000, guid: 3329571b1b8c0d34b83f9175eec19727, type: 3}
       - {fileID: 21300000, guid: 2b9c729e026b0514b8dde1680d8a7e90, type: 3}
-      m_AnimationSpeed: 15
+      m_AnimationSpeed: 15.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 8, y: -6, z: 0}
@@ -9636,13 +9636,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2055066893}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.09515083, w: 0.99546295}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 531854007}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -10.92}
 --- !u!212 &2055066895
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -9708,7 +9708,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radios: 0.5
-  _powerSkill: 0.05
+  _delay: 0.1
+  _powerSkill: 0.1
 --- !u!58 &2055066897
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -9757,7 +9758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _timeAction: 5
-  _timeCooldown: 6
+  _timeCooldown: 3
 --- !u!1001 &799384012598381776
 PrefabInstance:
   m_ObjectHideFlags: 0
